@@ -25,15 +25,15 @@ class LineBotController < ApplicationController
 
     def client
       @client ||= Line::Bot::Client.new { |config|
-        config.channel_secret = ENV['LINE_CHANNEL_SECRET']
-        config.channel_token = ENV['LINE_CHANNEL_TOKEN']
+        config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+        config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
       }
     end
 
     def search_and_create_message(keyword)
       http_client = HTTPClient.new
       url = 'https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426'
-      query = { 
+      query = {
         'keyword' => keyword,
         'applicationId' => ENV['RAKUTEN_APPID'],
         'hits' => 5,
@@ -45,7 +45,7 @@ class LineBotController < ApplicationController
       response = JSON.parse(response.body)
 
       if response.key?('error')
-        text = "この検索条件に該当する宿泊施設が見つかりませんでした。\n 条件を変えて再検索してください。"
+        text = "この検索条件に該当する宿泊施設が見つかりませんでした。\n条件を変えて再検索してください。"
         {
           type: 'text',
           text: text
