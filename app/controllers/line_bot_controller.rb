@@ -147,7 +147,7 @@ class LineBotController < ApplicationController
                   },
                   {
                     type: 'text',
-                    text: '￥' + hotel['hotelMinCharge'].to_s(:delimited) + '〜',
+                    text: hotel['hotelMinCharge'].nil? ? '情報なし' : '￥' + hotel['hotelMinCharge'].to_s(:delimited) + '〜',
                     wrap: true,
                     color: '#666666',
                     size: 'sm',
